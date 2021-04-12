@@ -81,8 +81,8 @@ Row {data-height=300}
 ### Season
 
 ```{r}
-
-w1
+library(printr)
+head(w1)
 
 ```
 
@@ -91,7 +91,7 @@ w1
 ```{r}
 
 ggplot(df)+
-  geom_jitter(aes(Home...Away.Odds, Interest),alpha = 0.1)+
+  geom_jitter(aes(Home...Away.Odds, Interest),alpha = 0.2)+
   xlab('Time')+
   ylab('Interest')
 
