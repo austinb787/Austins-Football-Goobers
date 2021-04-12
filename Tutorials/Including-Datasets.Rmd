@@ -2,52 +2,42 @@
 title: 'Datasets'
 output: 
   html_document:
-    logo: onica_amazon_small.png
     vertical_layout: scroll
     code_folding: hide
 ---
 
-```{r setup, include=FALSE, message=FALSE, warning=FALSE}
-#knitr::opts_chunk$set(echo = TRUE) # always echo=FALSE for dashboards. No need to show off. you can include source code if you want
-
-
-
-## 2 OLS models
-linear.1 <- lm(rating ~ complaints + privileges + learning + raises + critical,
-data=attitude)
-linear.2 <- lm(rating ~ complaints + privileges + learning, data=attitude)
-## create an indicator dependent variable, and run a probit model
-attitude$high.rating <- (attitude$rating > 70)
-probit.model <- glm(high.rating ~ learning + critical + advance, data=attitude,
-family = binomial(link = "probit"))
+```{r setup, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
 ```
 ## DT::datatable {.tabset}
-### Basic DT::datatable
-
-```{r}
-library(DT)
-datatable(iris)
-```          
-
 ### Advanced DT::datatable
 
-```{r}
+```{r table, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(DT)
+here::dr_here()
+NFL_Picks_2020_DF <- read.csv(here::here('NFL_Picks_2020_DF.csv'))
+niceTable <- NFL_Picks_2020_DF %>% 
+  select(Picker, Game.Pick, Points,
+         Week, Away.Team, Away.Team.Conference, Away.Team.Odds, Away.Team.Score, 
+         Home.Team, Home.Team.Conference, Home.Team.Odds, Home.Team.Score)
 
-datatable(iris, filter = 'top', extensions = 'Buttons',  options = list( columnDefs = list(list(width = '70px')),
-  searchHighlight = TRUE,pageLength = 20  , dom = 'Bfrtip',
-                                                                                                 buttons = 
-                                                 list( list(
-                                                   extend = 'collection',
-                                                  buttons = list(list(extend='csv',filename='iris_summary.csv'),
-                                                                 list(extend='excel',
-                                                                      filename = 'iris_summary.xlsx') ),text="Download"
-                                                               
-                                                                                                 
-))))
+
+datatable(niceTable, filter = 'top', extensions = 'Buttons',  options = list( columnDefs = list(list(width = '70px')),
+                                                                         searchHighlight = TRUE,pageLength = 20  , dom = 'Bfrtip',
+                                                                         buttons = 
+                                                                           list( list(
+                                                                             extend = 'collection',
+                                                                             buttons = list(list(extend='csv',filename='NFL_Picks_2020_DF.csv'),
+                                                                                            list(extend='excel',
+                                                                                                 filename = 'NFL_Picks_2020.xlsx') ),text="Download"
+                                                                             
+                                                                             
+                                                                           ))))
 
 ```
 
 
-### As a function
+### Future things
 
-Make your life even easier: write a simple datatable function that applies your go-to formatting.  Add the function to an R script in the dashboard supporting scripts folder that you bring along for every dashboard.
+I'll put future things in this tab. 
